@@ -101,8 +101,8 @@ static GLuint nextPowerOfTwo(CGFloat num) {
 
 -(void)setupView:(GLView*)view
 {
-	const GLfloat zNear = 0.01, zFar = 10, fieldOfView = 38.0; 
-	GLfloat size;
+	//const GLfloat zNear = 0.01, zFar = 10, fieldOfView = 38.0; 
+	//GLfloat size;
 	
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
