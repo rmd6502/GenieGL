@@ -1,0 +1,4 @@
+This is heavily based off Jeff Lamarche's Texture Triangle demo.  I'll be turning this into an extension on
+UIViewController pretty soon.
+
+Build the app using xcode 3.x or better
