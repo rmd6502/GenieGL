@@ -107,10 +107,13 @@ static GLuint nextPowerOfTwo(CGFloat num) {
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	size = zNear * tanf(DEGREES_TO_RADIANS(fieldOfView) / 2.0); 
-	CGRect rect = view.bounds; 
-	glFrustumf(-size, size, -size / (rect.size.width / rect.size.height), size / 
-			   (rect.size.width / rect.size.height), zNear, zFar); 
+	//size = zNear * tanf(DEGREES_TO_RADIANS(fieldOfView) / 2.0); 
+	CGRect rect = hideView.bounds; 
+	CGRect rect2 = view.bounds;
+	//glFrustumf(-size, size, -size / (rect.size.width / rect.size.height), size / 
+			   //(rect.size.width / rect.size.height), zNear, zFar); 
+	//(<#GLfloat left#>, <#GLfloat right#>, <#GLfloat bottom#>, <#GLfloat top#>, <#GLfloat zNear#>, <#GLfloat zFar#>)
+	glOrthof(-1.1f, 1.0f, -1.2 * rect2.size.height/rect.size.height, .8, 0.01f, 1000.0f);
 	glViewport(0, 0, rect.size.width, rect.size.height);  
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -165,7 +168,7 @@ static GLuint nextPowerOfTwo(CGFloat num) {
     glEnable(GL_LIGHT0);
     
     // Define the ambient component of the first light
-    static const Color3D light0Ambient[] = {{0.9, 0.9, 0.9, 1.0}};
+    static const Color3D light0Ambient[] = {{1.0, 1.0, 1.0, 1.0}};
 	glLightfv(GL_LIGHT0, GL_AMBIENT, (const GLfloat *)light0Ambient);
     
     // Define the diffuse component of the first light
