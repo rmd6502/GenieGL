@@ -19,6 +19,7 @@
 		2D500B9A0D5A79CF00DBA0E3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		8340DA281358CA8A0020367C /* glGenieView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8340DA271358CA8A0020367C /* glGenieView.xib */; };
 		8340DA781358DDF30020367C /* UIView+Render.m in Sources */ = {isa = PBXBuildFile; fileRef = 8340DA771358DDF30020367C /* UIView+Render.m */; };
+		83E5F8CF135CEA52006DE2B6 /* monkey_toy.png in Resources */ = {isa = PBXBuildFile; fileRef = 83E5F8CE135CEA52006DE2B6 /* monkey_toy.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		8340DA271358CA8A0020367C /* glGenieView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = glGenieView.xib; sourceTree = "<group>"; };
 		8340DA761358DDF30020367C /* UIView+Render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Render.h"; sourceTree = "<group>"; };
 		8340DA771358DDF30020367C /* UIView+Render.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Render.m"; sourceTree = "<group>"; };
+		83E5F8CE135CEA52006DE2B6 /* monkey_toy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = monkey_toy.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +95,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83E5F8CE135CEA52006DE2B6 /* monkey_toy.png */,
 				1FF0216B0EF21FA500761551 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				8340DA271358CA8A0020367C /* glGenieView.xib */,
@@ -180,6 +183,7 @@
 			files = (
 				1FF0216C0EF21FA500761551 /* MainWindow.xib in Resources */,
 				8340DA281358CA8A0020367C /* glGenieView.xib in Resources */,
+				83E5F8CF135CEA52006DE2B6 /* monkey_toy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

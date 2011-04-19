@@ -29,6 +29,7 @@ typedef struct {GLfloat x; GLfloat y;} Vertex2D;
 
 @property (nonatomic,assign) IBOutlet UIButton *hideButton;
 @property (nonatomic,assign) IBOutlet UIView *hideView;
+@property (nonatomic,assign) IBOutlet UITextField *textField;
 
 - (void)drawView:(GLView*)view;
 - (void)setupView:(GLView*)view;

@@ -51,6 +51,7 @@ static GLuint nextPowerOfTwo(CGFloat num) {
 
 @synthesize hideButton;
 @synthesize hideView;
+@synthesize textField;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -242,6 +243,11 @@ static GLuint nextPowerOfTwo(CGFloat num) {
     pos = 0;
     //NSLog(@"A place to stop");
 }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+	[textField resignFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning 
 {
     [super didReceiveMemoryWarning]; 
