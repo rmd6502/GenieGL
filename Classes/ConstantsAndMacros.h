@@ -7,8 +7,10 @@
 //
 
 // How many times a second to refresh the screen
-#define kRenderingFrequency 60.0
-#define SLICES 40
+#define kRenderingFrequency 80.0
+#define SLICES 45
+// in seconds
+#define funnelTime .25
 
 // For setting up perspective, define near, far, and angle of view
 #define kZNear			0.01

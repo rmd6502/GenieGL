@@ -86,18 +86,23 @@ static GLuint nextPowerOfTwo(CGFloat num) {
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	pos += 2;
-    if (pos >= SLICES * 2) {
-		hideView.hidden = NO;
-		glDeleteTextures(1, &texture[0]);
-		texture[0] = 0;
-        [view stopAnimation];
-		glDisable(GL_DEPTH_TEST);
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_BLEND);
-		glDisable(GL_LIGHT0);		
-		glDisable(GL_LIGHTING);
-    }	
+	if (pos >= 0) {
+		pos += 2;
+		if (pos >= SLICES * 2) {
+			hideView.hidden = NO;
+			glDeleteTextures(1, &texture[0]);
+			texture[0] = 0;
+			[view stopAnimation];
+			glDisable(GL_DEPTH_TEST);
+			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_BLEND);
+			glDisable(GL_LIGHT0);		
+			glDisable(GL_LIGHTING);
+		}
+	} else {
+		[self calcVertices];
+	}
+
 }
 
 -(void)setupView:(GLView*)view
@@ -141,7 +146,7 @@ static GLuint nextPowerOfTwo(CGFloat num) {
 	
 	// render the view into an image
     UIImage *img = [self.hideView offlineRender];
-	NSLog(@"img %@", img);
+	//NSLog(@"img %@", img);
  	GLuint width = nextPowerOfTwo(hideView.bounds.size.width);
     GLuint height = nextPowerOfTwo(hideView.bounds.size.height);
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -191,7 +196,8 @@ static GLuint nextPowerOfTwo(CGFloat num) {
     a1.x = 1.0f;
     a1.y = 1.0f;
 	
-    c1.x = ((bb.origin.x + bb.size.width) / vb.size.width) * 2.0f - 1.0f;
+    c1.x = a1.x;
+	c1x = c1.x;
     c1.y = -1.0f;
 	
     b1.x = a1.x * .9 + c1.x * .1;
@@ -202,7 +208,8 @@ static GLuint nextPowerOfTwo(CGFloat num) {
     a2.x = -1.0f;
     a2.y = 1.0f;
 	
-    c2.x = (bb.origin.x / vb.size.width) * 2.0f - 1.0f;
+    c2.x = a2.x;
+	c2x = c2.x;
     c2.y = -1.0f;
 	
     b2.x = a2.x * .9 + c2.x * .1;
@@ -240,8 +247,64 @@ static GLuint nextPowerOfTwo(CGFloat num) {
         
         //NSLog(@"ct %d p1.x %f p1.y %f p2.x %f p2.y %f t %f", ct, p1.x, p1.y, p2.x, p2.y, t);
     }
-    pos = 0;
+	GLfloat tc = (kRenderingFrequency * funnelTime);
+    pos = -tc;
+	final1x = ((bb.origin.x + bb.size.width) / vb.size.width) * 2.0f - 1.0f;
+	d1x = (final1x - c1x)/tc;
+	final2x = (bb.origin.x / vb.size.width) * 2.0f - 1.0f;
+	d2x = (final2x - c2x)/tc;
     //NSLog(@"A place to stop");
+}
+
+- (void)calcVertices {
+	Vertex2D a1,b1,c1,d1;
+    Vertex2D a2,b2,c2,d2;    
+    Vector3D *vertexPointer = (Vector3D *)bezierVertices;
+    
+	if (++pos == 0) return;
+	
+	c1x += d1x;
+	c2x += d2x;
+	
+    a1.x = 1.0f;
+    a1.y = 1.0f;
+	
+    c1.x = c1x;
+    c1.y = -1.0f;
+	
+    b1.x = a1.x * .9 + c1.x * .1;
+    b1.y = a1.y * .5 + c1.y * .5;
+    d1.x = c1.x * .9 + a1.x * .1;
+    d1.y = c1.y * .5 + a1.y * .5;
+    
+    a2.x = -1.0f;
+    a2.y = 1.0f;
+	
+    c2.x = c2x;
+    c2.y = -1.0f;
+	
+    b2.x = a2.x * .9 + c2.x * .1;
+    b2.y = a2.y * .5 + c2.y * .5;
+    d2.x = c2.x * .9 + a2.x * .1;
+    d2.y = c2.y * .5 + a2.y * .5;
+    
+    //NSLog(@"a1.x %f a1.y %f b1.x %f b1.y %f c1.x %f c1.y %f d1.x %f d1.y %f", a1.x,a1.y,b1.x,b1.y,c1.x,c1.y,d1.x,d1.y);
+    //NSLog(@"a2.x %f a2.y %f b2.x %f b2.y %f c2.x %f c2.y %f d2.x %f d2.y %f", a2.x,a2.y,b2.x,b2.y,c2.x,c2.y,d2.x,d2.y);
+    for (GLfloat t = 0.0f; t <= 1.0f; t += (1.0f/SLICES)) {
+		// No, not a typo, I got the control points' orders different
+        Vertex2D p1 = bezier(a1, b1, d1, c1, t);
+        Vertex2D p2 = bezier(a2, b2, d2, c2, t);
+        vertexPointer->x = p1.x;
+        vertexPointer->y = p1.y;
+        vertexPointer->z = -0.0;
+        ++vertexPointer;
+        vertexPointer->x = p2.x;
+        vertexPointer->y = p2.y;
+        vertexPointer->z = -0.0;
+        ++vertexPointer;
+                
+        //NSLog(@"ct %d p1.x %f p1.y %f p2.x %f p2.y %f t %f", ct, p1.x, p1.y, p2.x, p2.y, t);
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {

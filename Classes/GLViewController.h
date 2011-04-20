@@ -24,7 +24,10 @@ typedef struct {GLfloat x; GLfloat y;} Vertex2D;
     Vector3D bezierVertices[2 * (SLICES + 1)];
     Vector3D normals[2*(SLICES+1)];
     Vertex2D texCoords[2*(SLICES+1)];
-    GLuint pos;
+    GLint pos;
+	GLfloat final1x, final2x;
+	GLfloat c1x, c2x;
+	GLfloat d1x, d2x;
 }
 
 @property (nonatomic,assign) IBOutlet UIButton *hideButton;
@@ -33,6 +36,7 @@ typedef struct {GLfloat x; GLfloat y;} Vertex2D;
 
 - (void)drawView:(GLView*)view;
 - (void)setupView:(GLView*)view;
+- (void)calcVertices;
 
 - (IBAction)clickButton:(id)sender;
 
